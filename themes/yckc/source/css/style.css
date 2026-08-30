@@ -199,7 +199,7 @@ ul { list-style: none; }
 .fold-chevron { display: none; }
 /* 面板内容容器：桌面端恒定展开 */
 .panel-fold { display: grid; grid-template-rows: 1fr; }
-.panel-fold > * { min-height: 0; }
+.panel-fold > .panel-body { min-height: 0; }
 
 .panel-title {
   font-family: var(--serif); font-size: 18px; letter-spacing: 3px;
@@ -577,6 +577,6 @@ ul { list-style: none; }
     grid-template-rows: 0fr;
     transition: grid-template-rows .34s cubic-bezier(.4, 0, .2, 1);
   }
-  .panel-fold > * { overflow: hidden; }
+  .panel-fold > .panel-body { overflow: hidden; }
   .side-panel.is-open .panel-fold { grid-template-rows: 1fr; }
 }

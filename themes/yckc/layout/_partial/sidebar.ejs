@@ -33,6 +33,7 @@ var sIsAboutIndex = (sBase === 'about.html' || sBase === 'about/index.html');
       </svg>
     </button>
     <div class="panel-fold" id="side-fold-nav">
+      <div class="panel-body">
       <% if (sMode === 'about') { %>
       <ul class="side-menu">
         <li class="<%= sIsAboutIndex ? 'is-current' : '' %>"><a href="<%= sHome %>about/"><%= S.overview %></a></li>
@@ -48,6 +49,7 @@ var sIsAboutIndex = (sBase === 'about.html' || sBase === 'about/index.html');
         <li class="<%= (sMode === 'contact') ? 'is-current' : '' %>"><a href="<%= sHome %>contact/"><%= S.contact %></a></li>
       </ul>
       <% } %>
+      </div>
     </div>
   </section>
 
@@ -61,10 +63,12 @@ var sIsAboutIndex = (sBase === 'about.html' || sBase === 'about/index.html');
       </svg>
     </button>
     <div class="panel-fold" id="side-fold-contact">
+      <div class="panel-body">
       <div class="side-contact">
         <p><%= S.president %>：李泊宁（<%= S.cls %>）</p>
         <p><%= sEn ? 'Email' : '邮箱' %>：<a href="mailto:liboning2011@vip.qq.com">liboning2011@vip.qq.com</a></p>
         <p>QQ：3970588157</p>
+      </div>
       </div>
     </div>
   </section>
