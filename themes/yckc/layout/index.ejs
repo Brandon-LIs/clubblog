@@ -1,0 +1,212 @@
+<%
+var posts = site.posts.sort('date', -1);
+var latest = posts.slice(0, 9);
+var isEn = /^en(\/|$)/.test(page.path || '');
+
+var t = isEn ? {
+  kicker: 'Yichang No.1 High School · Sci-Tech Education',
+  title: 'Extreme Intelligence<br>Innovating the Future',
+  sub: 'Relying on the "Deng Xiaoping Science & Technology Innovation Laboratory", covering maker, robotics and programming — cultivating young talents with innovative spirit and practical skills.',
+  join: 'Join the Club', about: 'About Us',
+  nav: 'Sections', news: 'Club News', more: 'More \u00BB',
+  notice: 'Notice', recruiting: 'Now Recruiting',
+  noticeText: 'The club recruits new members all year round. Students passionate about innovation are welcome!',
+  noticeList: ['Open to all students: maker, robotics, programming & AI', 'Contact: Li Boning, Class 2621', 'Email: liboning2011@vip.qq.com'],
+  noticeBtn: 'Join Us',
+  card: 'Club Profile', newsAll: 'View all news',
+  stats: [['300+', 'National Award Winners'], ['13', 'First Prizes (National Youth Sci-Tech Innovation Contest)'], ['379', 'Works at the 27th Sci-Tech Festival'], ['1000+', 'Participants in the Festival']],
+  honors: 'Selected Honors', honorsAll: 'All honors \u00BB',
+  honorItems: [
+    ['\uD83E\uDD47', 'First Prize, National Youth Sci-Tech Innovation Contest', 'The only first prize in Hubei'],
+    ['\uD83C\uDFC5', '"Kexing Innovation Award" (2026)', 'Only 5 nationwide'],
+    ['\uD83C\uDFDB\uFE0F', 'National Outstanding Sci-Tech Education Innovation School', 'School honor'],
+    ['\u2B50', 'STEM Education Principal Studio', 'First national batch - only 8 schools']
+  ]
+} : {
+  kicker: '宜昌市第一中学 · 科创教育',
+  title: '极智人工智能<br>创新引领未来',
+  sub: '依托"小平科技创新实验室"，涵盖创客、机器人、编程等方向<br>培养具有创新精神与实践能力的新时代青年',
+  join: '加入科创社团', about: '了解社团',
+  nav: '栏目导航', news: '社团动态', more: '更多 &raquo;',
+  notice: '通知公告', recruiting: '招新进行时',
+  noticeText: '科创社团常年纳新，欢迎热爱创新的同学加入！',
+  noticeList: ['面向全体在校学生的创客、机器人、编程、人工智能方向', '联系社长：2621班 李泊宁', '邮箱：liboning2011@vip.qq.com'],
+  noticeBtn: '查看招新详情',
+  card: '社团名片', newsAll: '查看全部动态',
+  stats: [['300+', '国家级获奖人次'], ['13', '全国科创大赛一等奖'], ['379', '第27届科技节作品数'], ['1000+', '科技节参与学子']],
+  honors: '荣誉精选', honorsAll: '全部荣誉 &raquo;',
+  honorItems: [
+    ['\uD83E\uDD47', '全国青少年科技创新大赛一等奖', '全省唯一 · 历史性突破'],
+    ['\uD83C\uDFC5', '"科行创新奖"（2026）', '全国仅5人 · 全省唯一高中生'],
+    ['\uD83C\uDFDB\uFE0F', '全国优秀科技教育创新学校', '学校荣誉'],
+    ['\u2B50', 'STEM教育名校长工作室', '全国首批 · 仅八校']
+  ]
+};
+
+var sideMenu = isEn ? [
+  ['/en/about/intro/', 'Introduction'],
+  ['/en/about/teacher/', 'Faculty'],
+  ['/en/about/honors/', 'Honors'],
+  ['/en/join/', 'Join Us'],
+  ['/en/contact/', 'Contact']
+] : [
+  ['/about/intro/', '社团简介'],
+  ['/about/teacher/', '指导教师'],
+  ['/about/honors/', '社团荣誉'],
+  ['/join/', '招贤纳士'],
+  ['/contact/', '联系我们']
+];
+%>
+
+<!-- Banner -->
+<section class="gov-banner">
+  <div class="banner-inner">
+    <div class="banner-text">
+      <p class="banner-kicker"><%= t.kicker %></p>
+      <h1 class="banner-title"><%- t.title %></h1>
+      <p class="banner-sub"><%- t.sub %></p>
+      <div class="banner-actions">
+        <a href="<%= isEn ? '/en/join/' : '/join/' %>" class="banner-btn banner-btn-gold"><%= t.join %></a>
+        <a href="<%= isEn ? '/en/about/intro/' : '/about/intro/' %>" class="banner-btn banner-btn-ghost"><%= t.about %></a>
+      </div>
+    </div>
+    <div class="banner-art" aria-hidden="true">
+      <svg viewBox="0 0 420 320" width="100%" height="100%">
+        <defs>
+          <linearGradient id="chipGrad" x1="0" y1="0" x2="1" y2="1">
+            <stop offset="0" stop-color="rgba(255,255,255,.25)"/>
+            <stop offset="1" stop-color="rgba(255,255,255,.05)"/>
+          </linearGradient>
+        </defs>
+        <rect x="150" y="110" width="120" height="120" rx="14" fill="url(#chipGrad)" stroke="rgba(255,255,255,.55)" stroke-width="2"/>
+        <rect x="176" y="136" width="68" height="68" rx="8" fill="none" stroke="rgba(224,184,106,.9)" stroke-width="2"/>
+        <circle cx="210" cy="170" r="16" fill="rgba(224,184,106,.35)" stroke="rgba(224,184,106,.9)" stroke-width="2"/>
+        <g stroke="rgba(255,255,255,.5)" stroke-width="2" stroke-linecap="round">
+          <line x1="120" y1="130" x2="150" y2="130"/><line x1="120" y1="170" x2="150" y2="170"/><line x1="120" y1="210" x2="150" y2="210"/>
+          <line x1="270" y1="130" x2="300" y2="130"/><line x1="270" y1="170" x2="300" y2="170"/><line x1="270" y1="210" x2="300" y2="210"/>
+          <line x1="170" y1="80" x2="170" y2="110"/><line x1="210" y1="80" x2="210" y2="110"/><line x1="250" y1="80" x2="250" y2="110"/>
+          <line x1="170" y1="230" x2="170" y2="260"/><line x1="210" y1="230" x2="210" y2="260"/><line x1="250" y1="230" x2="250" y2="260"/>
+        </g>
+        <g stroke="rgba(255,255,255,.28)" stroke-width="1.6" fill="none" stroke-linejoin="round">
+          <polyline points="60,40 60,100 120,100 120,130 150,130"/>
+          <polyline points="360,60 360,130 300,130"/>
+          <polyline points="360,280 360,210 300,210"/>
+          <polyline points="60,280 60,210 120,210 120,170 150,170"/>
+        </g>
+        <g fill="rgba(224,184,106,.85)">
+          <circle cx="60" cy="40" r="4"/><circle cx="360" cy="60" r="4"/><circle cx="360" cy="280" r="4"/><circle cx="60" cy="280" r="4"/>
+        </g>
+        <g transform="translate(330,36)" stroke="rgba(255,255,255,.4)" stroke-width="1.6" fill="none">
+          <circle r="14"/><circle r="6"/>
+          <g stroke-linecap="round"><line x1="0" y1="-18" x2="0" y2="-22"/><line x1="0" y1="18" x2="0" y2="22"/><line x1="-18" y1="0" x2="-22" y2="0"/><line x1="18" y1="0" x2="22" y2="0"/></g>
+        </g>
+        <text x="210" y="305" text-anchor="middle" fill="rgba(255,255,255,.4)" font-size="12" letter-spacing="4">SCIENCE · TECHNOLOGY · INNOVATION</text>
+      </svg>
+    </div>
+  </div>
+</section>
+
+<!-- 数据条 -->
+<section class="gov-stats">
+  <div class="gov-container stats-row">
+    <% t.stats.forEach(function(stat) { %>
+    <div class="stat-cell">
+      <strong><%= stat[0] %></strong>
+      <span><%= stat[1] %></span>
+    </div>
+    <% }) %>
+  </div>
+</section>
+
+<!-- 三栏主体 -->
+<section class="gov-container home-columns">
+  <aside class="col col-side">
+    <div class="side-panel">
+      <h3 class="panel-title panel-title-red"><%= t.nav %></h3>
+      <ul class="side-menu">
+        <% sideMenu.forEach(function(item) { %>
+        <li><a href="<%= item[0] %>"><%= item[1] %></a></li>
+        <% }) %>
+      </ul>
+    </div>
+    <div class="side-panel">
+      <h3 class="panel-title panel-title-red"><%= isEn ? 'Friendly Links' : '友情链接' %></h3>
+      <ul class="side-menu side-menu-links">
+        <% theme.links.forEach(function(link) { %>
+        <li><a href="<%= link.url %>" target="_blank" rel="noopener"><%= link.title %></a></li>
+        <% }) %>
+        <% if (!isEn) { %>
+        <li><a href="https://www.most.gov.cn/" target="_blank" rel="noopener">中华人民共和国科学技术部</a></li>
+        <li><a href="https://www.cyscc.org/" target="_blank" rel="noopener">全国青少年科技创新大赛</a></li>
+        <% } %>
+      </ul>
+    </div>
+  </aside>
+
+  <div class="col col-main">
+    <div class="panel">
+      <div class="panel-head">
+        <h3 class="panel-title"><%= t.news %></h3>
+        <a class="panel-more" href="/archives/"><%- t.more %></a>
+      </div>
+      <ul class="gov-news-list">
+        <% latest.forEach(function(post) { %>
+        <li>
+          <a href="<%= url_for(post.path) %>">
+            <span class="news-item-title"><%= post.title %></span>
+            <span class="news-item-date"><%= date(post.date, 'YYYY-MM-DD') %></span>
+          </a>
+        </li>
+        <% }) %>
+      </ul>
+    </div>
+  </div>
+
+  <aside class="col col-aside">
+    <div class="panel">
+      <div class="panel-head">
+        <h3 class="panel-title"><%= t.notice %></h3>
+      </div>
+      <div class="notice-body">
+        <p class="notice-flag"><%= t.recruiting %></p>
+        <p><%= t.noticeText %></p>
+        <ul class="notice-list">
+          <% t.noticeList.forEach(function(n) { %><li><%= n %></li><% }) %>
+        </ul>
+        <a href="<%= isEn ? '/en/join/' : '/join/' %>" class="notice-btn"><%= t.noticeBtn %></a>
+      </div>
+    </div>
+    <div class="panel">
+      <div class="panel-head">
+        <h3 class="panel-title"><%= t.card %></h3>
+      </div>
+      <div class="card-body">
+        <dl class="id-card">
+          <dt><%= isEn ? 'Core Brand' : '核心品牌' %></dt><dd><%= isEn ? 'Extreme Intelligence (AI)' : '极智人工智能' %></dd>
+          <dt><%= isEn ? 'Faculty Advisor' : '指导教师' %></dt><dd><%= isEn ? 'Xiang Zhiyong (Top-10 National Sci-Tech Teacher)' : '向志勇（中国科协十佳科技教师）' %></dd>
+          <dt><%= isEn ? 'President' : '现任社长' %></dt><dd><%= isEn ? 'Li Boning, Class 2621' : '2621班 李泊宁' %></dd>
+          <dt><%= isEn ? 'Platform' : '依托平台' %></dt><dd><%= isEn ? 'Deng Xiaoping Sci-Tech Innovation Lab' : '小平科技创新实验室' %></dd>
+        </dl>
+      </div>
+    </div>
+  </aside>
+</section>
+
+<!-- 荣誉精选 -->
+<section class="gov-honors">
+  <div class="gov-container">
+    <div class="panel-head">
+      <h3 class="panel-title panel-title-lg"><%= t.honors %></h3>
+      <a class="panel-more" href="<%= isEn ? '/en/about/honors/' : '/about/honors/' %>"><%- t.honorsAll %></a>
+    </div>
+    <div class="honor-strip">
+      <% t.honorItems.forEach(function(h) { %>
+      <div class="honor-item">
+        <span class="honor-medal"><%= h[0] %></span>
+        <h4><%= h[1] %></h4>
+        <p><%= h[2] %></p>
+      </div>
+      <% }) %>
+    </div>
+  </div>
+</section>

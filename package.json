@@ -1,0 +1,25 @@
+{
+  "name": "yckc-website",
+  "version": "1.0.0",
+  "description": "宜昌一中科创社团官网",
+  "scripts": {
+    "build": "node build.js",
+    "clean": "rm -rf public db.json",
+    "serve": "npx serve public -l 4000"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "hexo": "^7.3.0",
+    "hexo-generator-archive": "^2.0.0",
+    "hexo-generator-category": "^2.0.0",
+    "hexo-generator-index": "^4.0.0",
+    "hexo-generator-tag": "^2.0.0",
+    "hexo-renderer-ejs": "^2.0.0",
+    "hexo-renderer-marked": "^7.0.1"
+  },
+  "devDependencies": {
+    "hexo-cli": "^4.3.2"
+  }
+}

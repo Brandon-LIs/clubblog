@@ -1,0 +1,11 @@
+node_modules/
+public/
+db.json
+.dbstore*
+*.log
+.DS_Store
+Thumbs.db
+.vercel
+.workbuddy/
+chars.txt
+

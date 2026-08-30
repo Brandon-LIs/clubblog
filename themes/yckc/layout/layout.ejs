@@ -1,0 +1,19 @@
+<%
+var isEn = /^en(\/|$)/.test(page.path || '');
+%>
+<!DOCTYPE html>
+<html lang="<%= isEn ? 'en' : 'zh-CN' %>">
+<head>
+  <%- partial('_partial/head') %>
+</head>
+<body>
+  <%- partial('_partial/header') %>
+
+  <main class="page-main">
+    <%- body %>
+  </main>
+
+  <%- partial('_partial/footer') %>
+  <script src="/js/main.js" defer></script>
+</body>
+</html>

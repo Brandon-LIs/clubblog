@@ -1,0 +1,76 @@
+<%
+var isEn = /^en(\/|$)/.test(page.path || '');
+var currentPath = '/' + (page.path || '');
+
+var navZh = theme.nav;
+var navEn = [
+  { title: 'Home', url: '/en/' },
+  { title: 'About', url: '/en/about/', children: [
+    { title: 'Introduction', url: '/en/about/intro/' },
+    { title: 'Faculty', url: '/en/about/teacher/' },
+    { title: 'Honors', url: '/en/about/honors/' }
+  ]},
+  { title: 'News', url: '/archives/' },
+  { title: 'Join Us', url: '/en/join/' },
+  { title: 'Contact', url: '/en/contact/' }
+];
+var nav = isEn ? navEn : navZh;
+
+// language switch link (only for mirrored sections: home / about / join / contact)
+var switchUrl = '';
+var rawPath = page.path || '';
+var cleanPath = rawPath.replace(/\.html$/, '').replace(/\/?index$/, '');
+if (isEn) {
+  switchUrl = '/' + cleanPath.replace(/^en\//, '');
+} else if (/^(index\.html|about\/.*|join\/.*|contact\/.*)$/.test(rawPath)) {
+  switchUrl = '/en/' + cleanPath;
+}
+%>
+<header class="gov-header">
+  <!-- 顶段：校徽 + 校名 + 校训 -->
+  <div class="masthead">
+    <div class="masthead-inner">
+      <a href="<%= isEn ? '/en/' : '/' %>" class="brand">
+        <img src="/images/logo.webp" alt="<%= isEn ? 'School Emblem' : '宜昌一中校徽' %>" class="brand-emblem">
+        <span class="brand-text">
+          <span class="brand-name"><%= isEn ? 'YCYZ Sci-Tech Innovation Club' : '宜昌一中科创社团' %></span>
+          <span class="brand-en">YICHANG NO.1 HIGH SCHOOL · SCIENCE &amp; TECHNOLOGY INNOVATION CLUB</span>
+        </span>
+      </a>
+      <div class="masthead-side">
+        <% if (switchUrl) { %><a class="lang-switch" href="<%= switchUrl %>"><%= isEn ? '中文' : 'English' %></a><% } %>
+        <div class="masthead-motto"><%= isEn ? 'Self-Education · Lifelong Development' : '自我教育 · 终身发展' %></div>
+        <div class="masthead-date" id="todayDate"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 导航段 -->
+  <nav class="gov-nav">
+    <div class="gov-nav-inner">
+      <button class="mobile-toggle" id="mobileToggle" aria-label="Menu">
+        <span></span><span></span><span></span>
+      </button>
+      <ul class="nav-list" id="navList">
+        <% nav.forEach(function(item) {
+             var isActive = (item.url === '/' || item.url === '/en/') ? (currentPath === '/index.html' || currentPath === '/' || currentPath === '/en/index.html' || currentPath === '/en/')
+                            : (currentPath.indexOf(item.url) === 0);
+        %>
+        <li class="nav-item <%= isActive ? 'is-active' : '' %>">
+          <a href="<%= item.url %>" class="nav-link"><%= item.title %></a>
+          <% if (item.children) { %>
+          <ul class="nav-sub">
+            <% item.children.forEach(function(child) { %>
+            <li><a href="<%= child.url %>"><%= child.title %></a></li>
+            <% }) %>
+          </ul>
+          <% } %>
+        </li>
+        <% }) %>
+        <% if (!switchUrl) { %>
+        <li class="nav-item nav-item-lang"><a href="<%= isEn ? '/' : '/en/' %>" class="nav-link"><%= isEn ? '中文' : 'EN' %></a></li>
+        <% } %>
+      </ul>
+    </div>
+  </nav>
+</header>

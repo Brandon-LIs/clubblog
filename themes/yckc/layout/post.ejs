@@ -1,0 +1,40 @@
+<div class="gov-container page-layout">
+  <nav class="gov-crumb">
+    <a href="/">首页</a><i>&rsaquo;</i>
+    <a href="/archives/">社团动态</a><i>&rsaquo;</i>
+    <span><%= page.title %></span>
+  </nav>
+
+  <div class="page-columns">
+    <%- partial('_partial/sidebar', { sMode: 'news' }) %>
+
+    <div class="col col-main page-main-col">
+      <article class="panel">
+        <header class="post-head">
+          <h1 class="post-title"><%= page.title %></h1>
+          <p class="post-meta">
+            <span>发布时间：<%= date(page.date, 'YYYY年MM月DD日') %></span>
+            <span>来源：宜昌一中科创社团</span>
+            <% if (page.tags && page.tags.length) { %>
+            <span class="post-tag-row">
+              <% page.tags.forEach(function(t) { %><em class="post-tag"><%= t.name %></em><% }) %>
+            </span>
+            <% } %>
+          </p>
+        </header>
+        <div class="gov-prose">
+          <%- page.content %>
+        </div>
+      </article>
+
+      <nav class="post-pager">
+        <% if (page.prev) { %>
+        <a class="pager-prev" href="<%= url_for(page.prev.path) %>"><span>上一篇</span><%= page.prev.title %></a>
+        <% } else { %><span class="pager-prev is-none"><span>上一篇</span>暂无</span><% } %>
+        <% if (page.next) { %>
+        <a class="pager-next" href="<%= url_for(page.next.path) %>"><span>下一篇</span><%= page.next.title %></a>
+        <% } else { %><span class="pager-next is-none"><span>下一篇</span>暂无</span><% } %>
+      </nav>
+    </div>
+  </div>
+</div>

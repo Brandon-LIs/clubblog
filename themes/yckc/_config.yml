@@ -1,0 +1,65 @@
+# 宜昌一中科创社团主题配置
+
+# 站点信息
+site:
+  name: 宜昌一中科创社团
+  short_name: 科创社团
+  motto: 极智人工智能 · 创新引领未来
+  school: 宜昌市第一中学
+  since: 1910
+
+# 社长信息
+president:
+  name: 李泊宁
+  class: 2621班
+  email: liboning2011@vip.qq.com
+  qq: 3970588157
+
+# 导航菜单
+nav:
+  - title: 首页
+    url: /
+    icon: home
+  - title: 社团概况
+    url: /about/
+    icon: info-circle
+    children:
+      - title: 社团简介
+        url: /about/intro/
+      - title: 指导教师
+        url: /about/teacher/
+      - title: 社团荣誉
+        url: /about/honors/
+  - title: 社团动态
+    url: /archives/
+    icon: newspaper-o
+  - title: 招贤纳士
+    url: /join/
+    icon: users
+  - title: 联系我们
+    url: /contact/
+    icon: envelope-o
+
+# 友情链接
+links:
+  - title: 宜昌一中
+    url: https://www.ycyz.com/
+  - title: GJ小说部
+    url: https://www.gjycyz.cn/
+
+# 统计数据（首页展示）
+stats:
+  - number: 300+
+    label: 国家级获奖人次
+  - number: 13
+    label: 全国科创大赛一等奖
+  - number: 379
+    label: 第27届科技节作品数
+  - number: 1000+
+    label: 科技节参与学子
+
+# 首页 Hero 区域
+hero:
+  title: 宜昌一中科创社团
+  subtitle: 自我教育 · 终身发展 · 创新引领未来
+  description: 根植于学校深厚的科创教育土壤，以"极智人工智能"为核心品牌，涵盖创客、机器人、编程等多个方向。

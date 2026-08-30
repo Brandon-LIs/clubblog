@@ -1,0 +1,71 @@
+<%
+var sp = page.path || '';
+var sEn = /^en(\/|$)/.test(sp);
+var sMode = (typeof sMode === 'undefined') ? 'page' : sMode;
+var sHome = sEn ? '/en/' : '/';
+var sBase = sp.replace(/^en\//, '');
+
+var S = sEn ? {
+  about: 'About', overview: 'Overview', intro: 'Introduction',
+  teacher: 'Faculty', honors: 'Honors', news: 'Club News',
+  join: 'Join Us', contact: 'Contact',
+  aboutSec: 'About the Club', sections: 'Sections', contactSec: 'Contact Us',
+  president: 'President', cls: 'Class 2621', toggle: 'Expand or collapse'
+} : {
+  about: '社团概况', overview: '栏目总览', intro: '社团简介',
+  teacher: '指导教师', honors: '社团荣誉', news: '社团动态',
+  join: '招贤纳士', contact: '联系我们',
+  aboutSec: '社团概况', sections: '栏目导航', contactSec: '联系我们',
+  president: '社长', cls: '2621班', toggle: '展开或收起'
+};
+
+var sIsAboutIndex = (sBase === 'about.html' || sBase === 'about/index.html');
+%>
+
+<aside class="col col-side">
+  <section class="side-panel" data-fold>
+    <button class="panel-title panel-title-red panel-toggle" type="button"
+            aria-expanded="false" aria-controls="side-fold-nav" title="<%= S.toggle %>">
+      <span class="panel-toggle-text"><%= (sMode === 'about') ? S.aboutSec : S.sections %></span>
+      <svg class="fold-chevron" viewBox="0 0 12 8" aria-hidden="true">
+        <path d="M1 1.5 6 6.5 11 1.5" fill="none" stroke="currentColor"
+              stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    </button>
+    <div class="panel-fold" id="side-fold-nav">
+      <% if (sMode === 'about') { %>
+      <ul class="side-menu">
+        <li class="<%= sIsAboutIndex ? 'is-current' : '' %>"><a href="<%= sHome %>about/"><%= S.overview %></a></li>
+        <li class="<%= sBase.indexOf('about/intro') !== -1 ? 'is-current' : '' %>"><a href="<%= sHome %>about/intro/"><%= S.intro %></a></li>
+        <li class="<%= sBase.indexOf('about/teacher') !== -1 ? 'is-current' : '' %>"><a href="<%= sHome %>about/teacher/"><%= S.teacher %></a></li>
+        <li class="<%= sBase.indexOf('about/honors') !== -1 ? 'is-current' : '' %>"><a href="<%= sHome %>about/honors/"><%= S.honors %></a></li>
+      </ul>
+      <% } else { %>
+      <ul class="side-menu">
+        <li class="<%= (sMode === 'about') ? 'is-current' : '' %>"><a href="<%= sHome %>about/"><%= S.about %></a></li>
+        <li class="<%= (sMode === 'news') ? 'is-current' : '' %>"><a href="/archives/"><%= S.news %></a></li>
+        <li class="<%= (sMode === 'join') ? 'is-current' : '' %>"><a href="<%= sHome %>join/"><%= S.join %></a></li>
+        <li class="<%= (sMode === 'contact') ? 'is-current' : '' %>"><a href="<%= sHome %>contact/"><%= S.contact %></a></li>
+      </ul>
+      <% } %>
+    </div>
+  </section>
+
+  <section class="side-panel side-panel-contact" data-fold>
+    <button class="panel-title panel-title-red panel-toggle" type="button"
+            aria-expanded="false" aria-controls="side-fold-contact" title="<%= S.toggle %>">
+      <span class="panel-toggle-text"><%= S.contactSec %></span>
+      <svg class="fold-chevron" viewBox="0 0 12 8" aria-hidden="true">
+        <path d="M1 1.5 6 6.5 11 1.5" fill="none" stroke="currentColor"
+              stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    </button>
+    <div class="panel-fold" id="side-fold-contact">
+      <div class="side-contact">
+        <p><%= S.president %>：李泊宁（<%= S.cls %>）</p>
+        <p><%= sEn ? 'Email' : '邮箱' %>：<a href="mailto:liboning2011@vip.qq.com">liboning2011@vip.qq.com</a></p>
+        <p>QQ：3970588157</p>
+      </div>
+    </div>
+  </section>
+</aside>

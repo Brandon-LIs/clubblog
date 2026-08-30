@@ -1,0 +1,59 @@
+<%
+var path = page.path || '';
+var isEn = /^en(\/|$)/.test(path);
+var bare = path.replace(/^en\//, '');   // 去掉语言前缀后再判断栏目
+var inAbout = bare.indexOf('about') === 0;
+
+var t = isEn ? {
+  home: 'Home', about: 'About', overview: 'Overview',
+  intro: 'Introduction', teacher: 'Faculty', honors: 'Honors',
+  news: 'Club News', join: 'Join Us', contact: 'Contact',
+  aboutSec: 'About the Club', contactSec: 'Contact Us',
+  president: 'President', date: 'Published'
+} : {
+  home: '首页', about: '社团概况', overview: '栏目总览',
+  intro: '社团简介', teacher: '指导教师', honors: '社团荣誉',
+  news: '社团动态', join: '招贤纳士', contact: '联系我们',
+  aboutSec: '社团概况', contactSec: '联系我们',
+  president: '社长', date: '发布时间'
+};
+var p = isEn ? '/en' : '';
+
+// 侧栏模式：决定侧栏高亮项
+var sideMode = 'page';
+if (inAbout) sideMode = 'about';
+else if (bare.indexOf('join') === 0) sideMode = 'join';
+else if (bare.indexOf('contact') === 0) sideMode = 'contact';
+%>
+
+<div class="gov-container page-layout">
+  <nav class="gov-crumb">
+    <a href="<%= p %>/"><%= t.home %></a><i>&rsaquo;</i>
+    <% if (inAbout) { %>
+      <a href="<%= p %>/about/"><%= t.about %></a><i>&rsaquo;</i>
+      <% if (bare === 'about/index.html' || bare === 'about.html') { %><span><%= t.overview %></span><% } else { %><span><%= page.title %></span><% } %>
+    <% } else if (bare.indexOf('join') === 0) { %>
+      <a href="<%= p %>/join/"><%= t.join %></a><i>&rsaquo;</i><span><%= page.title %></span>
+    <% } else if (bare.indexOf('contact') === 0) { %>
+      <a href="<%= p %>/contact/"><%= t.contact %></a><i>&rsaquo;</i><span><%= page.title %></span>
+    <% } else { %>
+      <span><%= page.title %></span>
+    <% } %>
+  </nav>
+
+  <div class="page-columns">
+    <%- partial('_partial/sidebar', { sMode: sideMode }) %>
+
+    <div class="col col-main page-main-col">
+      <div class="panel">
+        <div class="panel-head">
+          <h2 class="panel-title panel-title-lg"><%= page.title %></h2>
+          <% if (page.date) { %><span class="panel-date"><%= t.date %>：<%= date(page.date, 'YYYY-MM-DD') %></span><% } %>
+        </div>
+        <div class="gov-prose">
+          <%- page.content %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

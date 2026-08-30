@@ -1,0 +1,68 @@
+# Hexo Configuration
+# 宜昌一中科创社团官网
+
+title: 宜昌一中科创社团
+subtitle: 极智人工智能 · 创新引领未来
+description: 宜昌市第一中学科创社团官方网站 — 自我教育，终身发展
+keywords: [宜昌一中, 科创社团, 人工智能, 创客, 机器人, STEM教育]
+author: 李泊宁
+language: zh-CN
+timezone: Asia/Shanghai
+
+url: https://yckc.vercel.app
+root: /
+permalink: :year/:month/:day/:title/
+permalink_defaults:
+
+source_dir: source
+public_dir: public
+tag_dir: tags
+archive_dir: archives
+category_dir: categories
+code_dir: downloads/code
+i18n_dir: :lang
+skip_render:
+
+new_post_name: :year-:month-:day-:title.md
+default_layout: post
+auto_spacing: true
+titlecase: false
+external_link:
+  enable: true
+  mark: true
+filename_case: 0
+render_drafts: false
+post_asset_folder: false
+relative_link: false
+future: true
+highlight:
+  enable: false
+prismjs:
+  enable: false
+
+index_generator:
+  path: ''
+  per_page: 10
+  order_by: -date
+
+default_category: uncategorized
+category_map:
+tag_map:
+
+meta_generator: true
+date_format: YYYY-MM-DD
+time_format: HH:mm:ss
+
+per_page: 10
+pagination_dir: page
+
+theme: yckc
+
+ignore:
+  - '**/node_modules'
+  - '**/.DS_Store'
+  - '.workbuddy'
+
+extensions:
+  emoji:
+    enable: false

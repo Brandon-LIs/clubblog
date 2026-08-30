@@ -1,0 +1,44 @@
+<%
+var posts = page.posts;
+%>
+<div class="gov-container page-layout">
+  <nav class="gov-crumb">
+    <a href="/">首页</a><i>&rsaquo;</i><span>社团动态</span>
+  </nav>
+
+  <div class="page-columns">
+    <%- partial('_partial/sidebar', { sMode: 'news' }) %>
+
+    <div class="col col-main page-main-col">
+      <div class="panel">
+        <div class="panel-head">
+          <h2 class="panel-title panel-title-lg">社团动态</h2>
+          <span class="panel-date">共 <%= site.posts.length %> 篇</span>
+        </div>
+
+        <% if (posts && posts.length) { %>
+        <ul class="gov-news-list gov-news-list-lg">
+          <% posts.forEach(function(post) { %>
+          <li>
+            <a href="<%= url_for(post.path) %>">
+              <span class="news-item-title"><%= post.title %></span>
+              <span class="news-item-date"><%= date(post.date, 'YYYY-MM-DD') %></span>
+            </a>
+          </li>
+          <% }) %>
+        </ul>
+
+        <% if (page.total > 1) { %>
+        <nav class="gov-pager">
+          <% if (page.prev_link) { %><a href="<%= page.prev_link %>" class="pager-btn">&laquo; 上一页</a><% } else { %><span class="pager-btn is-disabled">&laquo; 上一页</span><% } %>
+          <span class="pager-info">第 <%= page.current %> 页 / 共 <%= page.total %> 页</span>
+          <% if (page.next_link) { %><a href="<%= page.next_link %>" class="pager-btn">下一页 &raquo;</a><% } else { %><span class="pager-btn is-disabled">下一页 &raquo;</span><% } %>
+        </nav>
+        <% } %>
+        <% } else { %>
+        <p class="gov-empty">暂无动态，敬请期待。</p>
+        <% } %>
+      </div>
+    </div>
+  </div>
+</div>

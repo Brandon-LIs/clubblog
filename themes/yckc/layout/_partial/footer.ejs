@@ -1,0 +1,37 @@
+<%
+var year = new Date().getFullYear();
+var isEn = /^en(\/|$)/.test(page.path || '');
+var colon = isEn ? ': ' : '：';   // 英文用半角冒号+空格，中文用全角冒号
+var t = isEn ? {
+  links: 'Friendly Links',
+  president: 'President',
+  address: 'Address',
+  school: 'Yichang No.1 High School, Xiling District, Yichang, Hubei',
+  copy: 'Copyright \u00A9 ' + year + ' Sci-Tech Innovation Club of Yichang No.1 High School. All Rights Reserved.'
+} : {
+  links: '友情链接',
+  president: '社长',
+  address: '地址',
+  school: '湖北省宜昌市西陵区　宜昌市第一中学',
+  copy: 'Copyright &copy; ' + year + ' 宜昌市第一中学科创社团 All Rights Reserved'
+};
+%>
+<footer class="gov-footer">
+  <div class="footer-links-bar">
+    <div class="footer-inner footer-links-inner">
+      <span class="footer-links-label"><%= t.links %><%= colon %></span>
+      <% theme.links.forEach(function(link, i) { %><a href="<%= link.url %>" target="_blank" rel="noopener"><%= link.title %></a><% if (i < theme.links.length - 1) { %><span class="link-sep" aria-hidden="true">|</span><% } %><% }) %>
+    </div>
+  </div>
+  <div class="footer-main">
+    <div class="footer-inner footer-main-inner">
+      <img src="/images/logo.webp" alt="logo" class="footer-emblem">
+      <div class="footer-info">
+        <p class="footer-title"><%= isEn ? 'Sci-Tech Innovation Club of Yichang No.1 High School' : '宜昌市第一中学科创社团' %></p>
+        <p class="footer-meta"><%= t.president %><%= colon %><%= theme.president.name %>（<%= theme.president.class %>）　Email<%= colon %><a href="mailto:<%= theme.president.email %>"><%= theme.president.email %></a>　QQ<%= colon %><%= theme.president.qq %></p>
+        <p class="footer-meta"><%= t.address %><%= colon %><%= t.school %></p>
+        <p class="footer-copy"><%- t.copy %></p>
+      </div>
+    </div>
+  </div>
+</footer>
