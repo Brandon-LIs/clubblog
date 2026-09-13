@@ -19,15 +19,31 @@ var nav = isEn ? navEn : navZh;
 // language switch link (only for mirrored sections: home / about / join / contact)
 var switchUrl = '';
 var rawPath = page.path || '';
-var cleanPath = rawPath.replace(/\.html$/, '').replace(/\/?index$/, '');
+// 归一化：en/index.html -> 'en'；about/intro/index.html -> 'about/intro'
+var cleanPath = rawPath.replace(/index\.html$/, '').replace(/\.html$/, '').replace(/\/+$/, '');
 if (isEn) {
-  switchUrl = '/' + cleanPath.replace(/^en\//, '');
+  // 剥掉 en 前缀：'en'(首页) 与 'en/xxx' 都要匹配。
+  // 此前只写 /^en\// ，英文首页去掉 index 后已是 'en'（无尾斜杠）匹配失败，
+  // 结果切换链接指回 /en 本身，点击「中文」看起来毫无反应。
+  var bare = cleanPath.replace(/^en(\/|$)/, '');
+  switchUrl = '/' + bare + (bare ? '/' : '');
 } else if (/^(index\.html|about\/.*|join\/.*|contact\/.*)$/.test(rawPath)) {
-  switchUrl = '/en/' + cleanPath;
+  switchUrl = '/en/' + cleanPath + (cleanPath ? '/' : '');
 }
 %>
 <header class="gov-header">
-  <!-- 顶段：校徽 + 校名 + 校训 -->
+  <!-- 顶栏：单位名 + 语言切换 + 日期（参照 www.gov.cn 的政务顶栏） -->
+  <div class="gov-topbar">
+    <div class="gov-topbar-inner">
+      <span class="topbar-site"><%= isEn ? 'Yichang No.1 High School · Sci-Tech Innovation Club' : '宜昌市第一中学 · 科技创新社团' %></span>
+      <span class="topbar-right">
+        <% if (switchUrl) { %><a class="lang-switch" href="<%= switchUrl %>"><%= isEn ? '中文' : 'English' %></a><% } %>
+        <span class="topbar-date" id="todayDate"></span>
+      </span>
+    </div>
+  </div>
+
+  <!-- 头部：校徽 + 校名 + 校训 -->
   <div class="masthead">
     <div class="masthead-inner">
       <a href="<%= isEn ? '/en/' : '/' %>" class="brand">
@@ -38,9 +54,7 @@ if (isEn) {
         </span>
       </a>
       <div class="masthead-side">
-        <% if (switchUrl) { %><a class="lang-switch" href="<%= switchUrl %>"><%= isEn ? '中文' : 'English' %></a><% } %>
         <div class="masthead-motto"><%= isEn ? 'Self-Education · Lifelong Development' : '自我教育 · 终身发展' %></div>
-        <div class="masthead-date" id="todayDate"></div>
       </div>
     </div>
   </div>

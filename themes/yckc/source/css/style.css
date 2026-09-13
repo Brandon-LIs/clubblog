@@ -1,21 +1,15 @@
 /* ============================================================
    宜昌一中科创社团 · 政务权威风主题
    配色：绛紫 #5B2C6F（校徽衍生）+ 哑金 #C9A063 + 深蓝灰 #1F2933
-   字体：标题思源宋体（子集自托管）/ 正文黑体
+   字体：参照 www.gov.cn —— 正文/界面用「微软雅黑」，标题/栏目用「宋体」
+         gov.cn 实际字体栈：Microsoft YaHei, SimSun, SimHei, Arial
+         两侧均以系统正式字体优先，思源宋体仅作最后兜底（不再优先下载）
    ============================================================ */
 
-@font-face {
-  font-family: "Noto Serif SC Sub";
-  src: url("/fonts/NotoSerifSC-Bold.subset.woff2") format("woff2");
-  font-weight: 700;
-  font-display: swap;
-}
-@font-face {
-  font-family: "Noto Serif SC Sub";
-  src: url("/fonts/NotoSerifSC-Black.subset.woff2") format("woff2");
-  font-weight: 900;
-  font-display: swap;
-}
+/* 说明：原先自托管的思源宋体子集已移除。
+   改用系统正式字体（宋体 / Times New Roman）后，实测浏览器仍会为每个页面
+   额外下载两份 woff2（约 490KB）却并不使用，属于纯浪费。
+   系统字体在 Windows（SimSun/宋体）与 macOS（Songti SC）上均已内置，无需兜底。 */
 
 :root {
   --gov-red: #5B2C6F;
@@ -26,11 +20,16 @@
   --gov-ink: #26282B;
   --gov-text: #3A3D40;
   --gov-text-light: #77797C;
-  --gov-line: #E3E4E6;
-  --gov-bg: #F5F5F4;
+  --gov-line: #D9D9D9;          /* gov.cn 同款细线（rgba(217,217,217)） */
+  --gov-line-soft: #EDEDED;     /* 更浅的内层分隔线 */
+  --gov-bg: #F4F4F4;
   --gov-panel: #FFFFFF;
-  --serif: "Noto Serif SC Sub", "STZhongsong", "Songti SC", "SimSun", "NSimSun", "FangSong", Georgia, serif;
-  --sans: "PingFang SC", "Microsoft YaHei", "SimHei", "Hiragino Sans GB", "Helvetica Neue", Arial, sans-serif;
+  /* 标题 / 栏目标题：中文走宋体，西文与数字走 Times New Roman（公文常规搭配，
+     TNR 用等高数字，避免 Georgia 类旧式数字在中文里显得高低不齐）。
+     西文前置是有意的：宋体的拉丁字形偏等宽，英文标题套宋体会像打字机。 */
+  --serif: "Times New Roman", "SimSun", "宋体", "Songti SC", "STSong", "NSimSun", "FangSong", serif;
+  /* 正文 / 界面：微软雅黑优先（www.gov.cn 标准栈 Microsoft YaHei,Simsun,SimHei,Arial） */
+  --sans: "Microsoft YaHei", "微软雅黑", "PingFang SC", "Hiragino Sans GB", "SimHei", "Heiti SC", Arial, "Helvetica Neue", sans-serif;
 }
 
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -39,8 +38,9 @@ body {
   font-family: var(--sans);
   color: var(--gov-text);
   background: var(--gov-bg);
-  line-height: 1.9;
-  font-size: 15px;
+  /* gov.cn 正文为 16px，行距比常规设计更紧，信息密度更高 */
+  line-height: 1.75;
+  font-size: 16px;
 }
 a { color: var(--gov-red); text-decoration: none; transition: color .2s; }
 a:hover { color: var(--gov-red-dark); }
@@ -52,51 +52,65 @@ ul { list-style: none; }
 /* ============ 页头：双段式 ============ */
 .gov-header { background: #fff; }
 
-/* 顶段 */
+/* ---- 顶栏：政务信息条（参照 www.gov.cn 顶栏：单位名 + 语言 + 日期） ---- */
+.gov-topbar {
+  background: #F4F4F4; border-bottom: 1px solid var(--gov-line);
+  font-size: 13px; color: var(--gov-text-light);
+}
+.gov-topbar-inner {
+  max-width: 1160px; margin: 0 auto; padding: 6px 20px;
+  display: flex; align-items: center; justify-content: space-between; gap: 14px;
+}
+.topbar-site { letter-spacing: 1px; }
+.topbar-right { display: flex; align-items: center; gap: 14px; }
+.topbar-date { color: var(--gov-text-light); letter-spacing: 1px; }
+
+/* 语言切换（放在顶栏，桌面/手机端均可见） */
+.lang-switch {
+  display: inline-block; padding: 2px 12px;
+  background: #fff; border: 1px solid var(--gov-line);
+  color: var(--gov-text); font-size: 13px; letter-spacing: 1px;
+  transition: background .2s, color .2s, border-color .2s;
+}
+.lang-switch:hover { background: var(--gov-red); border-color: var(--gov-red); color: #fff; }
+.nav-item-lang { max-width: 90px; }
+.nav-item-lang .nav-link { color: var(--gov-gold-light); font-family: var(--sans); font-size: 14px; }
+
+/* ---- 头部：校徽 + 校名 + 校训 ---- */
 .masthead { background: #fff; border-bottom: 1px solid var(--gov-line); }
 .masthead-inner {
-  max-width: 1160px; margin: 0 auto; padding: 18px 20px;
+  max-width: 1160px; margin: 0 auto; padding: 16px 20px;
   display: flex; align-items: center; justify-content: space-between; gap: 16px;
 }
 .brand { display: flex; align-items: center; gap: 16px; }
-.brand-emblem { width: 68px; height: 68px; object-fit: contain; }
+.brand-emblem { width: 64px; height: 64px; object-fit: contain; }
 .brand-text { display: flex; flex-direction: column; }
 .brand-name {
   font-family: var(--serif);
-  font-weight: 900;
-  font-size: 33px; letter-spacing: 2.5px;
+  font-weight: 700;
+  font-size: 32px; letter-spacing: 3px;
   color: var(--gov-red); line-height: 1.25;
 }
 .brand-en {
-  font-size: 10.5px; color: #A9ABAD; letter-spacing: 1.6px; margin-top: 4px;
-  font-family: Georgia, "Times New Roman", serif;
+  font-size: 10.5px; color: #A9ABAD; letter-spacing: 1.6px; margin-top: 5px;
+  font-family: Arial, "Helvetica Neue", sans-serif;
 }
 .masthead-side { text-align: right; }
-/* 语言切换 */
-.lang-switch {
-  display: inline-block; margin-bottom: 8px; padding: 4px 16px;
-  border: 1px solid var(--gov-gold); border-radius: 2px;
-  color: var(--gov-gold); font-size: 13px; letter-spacing: 2px;
-  font-family: var(--serif); font-weight: 700; transition: all .2s;
-}
-.lang-switch:hover { background: var(--gov-gold); color: #fff; }
-.nav-item-lang { max-width: 90px; }
-.nav-item-lang .nav-link { color: var(--gov-gold-light); font-family: var(--sans); font-size: 14px; }
 .masthead-motto {
   font-family: var(--serif);
-  color: var(--gov-gold); font-size: 15px; letter-spacing: 3px; font-weight: 700;
+  color: var(--gov-gold); font-size: 15px; letter-spacing: 4px; font-weight: 700;
 }
-.masthead-date { font-size: 12.5px; color: var(--gov-text-light); margin-top: 6px; letter-spacing: 1px; }
 
 /* 导航段 */
-.gov-nav { background: linear-gradient(180deg, var(--gov-red), var(--gov-red-dark)); }
+/* 导航条：扁平纯色（政务官网不用渐变），文字用微软雅黑 */
+.gov-nav { background: var(--gov-red); }
 .gov-nav-inner { max-width: 1160px; margin: 0 auto; padding: 0 20px; }
 .nav-list { display: flex; }
 .nav-item { position: relative; flex: 1; text-align: center; }
 .nav-link {
   display: block; padding: 13px 10px;
-  color: rgba(255,255,255,.94); font-size: 16.5px; letter-spacing: 3px;
-  font-family: var(--serif); font-weight: 700;
+  color: rgba(255,255,255,.95); font-size: 16.5px; letter-spacing: 2px;
+  font-family: var(--sans); font-weight: 400;
   border-bottom: 3px solid transparent;
   transition: background .2s, border-color .2s;
 }
@@ -121,9 +135,9 @@ ul { list-style: none; }
 /* 移动端汉堡 */
 .mobile-toggle {
   display: none; background: none; border: 1px solid rgba(255,255,255,.5);
-  border-radius: 4px; padding: 8px 9px; cursor: pointer; margin: 8px 0;
+  padding: 8px 9px; cursor: pointer; margin: 8px 0;
 }
-.mobile-toggle span { display: block; width: 20px; height: 2px; background: #fff; margin: 4px 0; border-radius: 2px; transition: all .3s; }
+.mobile-toggle span { display: block; width: 20px; height: 2px; background: #fff; margin: 4px 0; transition: all .3s; }
 .mobile-toggle.active span:nth-child(1) { transform: rotate(45deg) translate(4px, 4px); }
 .mobile-toggle.active span:nth-child(2) { opacity: 0; }
 .mobile-toggle.active span:nth-child(3) { transform: rotate(-45deg) translate(4px, -4px); }
@@ -131,10 +145,8 @@ ul { list-style: none; }
 
 /* ============ Banner ============ */
 .gov-banner {
-  background:
-    radial-gradient(ellipse at 85% 20%, rgba(201,160,99,.16), transparent 55%),
-    radial-gradient(ellipse at 10% 90%, rgba(0,0,0,.22), transparent 55%),
-    linear-gradient(118deg, var(--gov-red-deep) 0%, var(--gov-red-dark) 42%, var(--gov-red) 100%);
+  /* 政务风：单层线性过渡，去掉多层径向渐变噪点 */
+  background: linear-gradient(100deg, var(--gov-red-deep) 0%, var(--gov-red-dark) 55%, var(--gov-red) 100%);
   color: #fff; overflow: hidden;
 }
 .banner-inner {
@@ -145,24 +157,22 @@ ul { list-style: none; }
 .banner-kicker {
   display: inline-block; font-size: 13px; letter-spacing: 4px;
   color: var(--gov-gold-light); border: 1px solid rgba(227,199,149,.45);
-  padding: 4px 16px; border-radius: 2px; margin-bottom: 20px;
+  padding: 4px 16px; margin-bottom: 20px;
 }
 .banner-title {
   font-family: var(--serif);
   font-size: 46px; line-height: 1.3; letter-spacing: 6px; font-weight: 700;
   margin-bottom: 18px;
 }
-.banner-sub { font-size: 15px; color: rgba(255,255,255,.82); line-height: 2; margin-bottom: 28px; }
+.banner-sub { font-size: 16px; color: rgba(255,255,255,.85); line-height: 1.9; margin-bottom: 28px; }
 .banner-actions { display: flex; gap: 14px; flex-wrap: wrap; }
 .banner-btn {
   display: inline-block; padding: 11px 30px; font-size: 15px; letter-spacing: 2px;
-  border-radius: 2px; font-family: var(--serif); font-weight: 700; transition: all .25s;
+  font-family: var(--sans); font-weight: 400;
+  transition: background .2s, color .2s, border-color .2s;
 }
-.banner-btn-gold {
-  background: linear-gradient(135deg, var(--gov-gold), var(--gov-gold-light));
-  color: #4A3413;
-}
-.banner-btn-gold:hover { transform: translateY(-2px); box-shadow: 0 8px 22px rgba(201,160,99,.4); color: #4A3413; }
+.banner-btn-gold { background: var(--gov-gold); color: #4A3413; }
+.banner-btn-gold:hover { background: var(--gov-gold-light); color: #4A3413; }
 .banner-btn-ghost { border: 1px solid rgba(255,255,255,.55); color: #fff; }
 .banner-btn-ghost:hover { background: rgba(255,255,255,.12); color: #fff; border-color: #fff; }
 .banner-art { flex: 0.85; max-width: 430px; }
@@ -207,7 +217,7 @@ ul { list-style: none; }
 }
 .panel-title-red {
   position: relative; padding: 12px 16px;
-  background: linear-gradient(90deg, #FBF7F2, #fff);
+  background: #FAFAFA;
   border-bottom: 2px solid var(--gov-red);
   color: var(--gov-red);
 }
@@ -244,7 +254,7 @@ ul { list-style: none; }
 .panel-head {
   display: flex; align-items: baseline; justify-content: space-between;
   padding: 13px 18px; border-bottom: 2px solid var(--gov-red);
-  background: linear-gradient(90deg, #FBF7F2, #fff);
+  background: #FAFAFA;
 }
 .panel-title-lg { font-size: 21px; }
 .panel-date { font-size: 12.5px; color: var(--gov-text-light); }
@@ -301,10 +311,10 @@ ul { list-style: none; }
 .honor-strip { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-top: 20px; }
 .honor-item {
   border: 1px solid var(--gov-line); border-top: 3px solid var(--gov-gold);
-  background: linear-gradient(180deg, #FDFBF8, #fff);
-  padding: 20px 18px; text-align: center; transition: all .25s;
+  background: #fff;
+  padding: 20px 18px; text-align: center; transition: border-color .2s;
 }
-.honor-item:hover { transform: translateY(-4px); box-shadow: 0 10px 24px rgba(126,20,30,.1); border-top-color: var(--gov-red); }
+.honor-item:hover { border-color: var(--gov-red); border-top-color: var(--gov-red); }
 .honor-medal { font-size: 30px; display: block; margin-bottom: 10px; }
 .honor-item h4 { font-size: 14.5px; color: var(--gov-ink); line-height: 1.6; font-family: var(--serif); letter-spacing: 1px; }
 .honor-item p { font-size: 12.5px; color: var(--gov-text-light); margin-top: 6px; }
@@ -332,10 +342,10 @@ ul { list-style: none; }
   margin-top: 12px; font-size: 13px; color: var(--gov-text-light);
   display: flex; justify-content: center; flex-wrap: wrap; gap: 8px 22px;
 }
-.post-tag { font-style: normal; background: #F4EEF2; color: var(--gov-red); padding: 1px 10px; border-radius: 2px; font-size: 12px; }
+.post-tag { font-style: normal; background: #F7F2F6; color: var(--gov-red); border: 1px solid #E6DAE4; padding: 1px 10px; font-size: 12px; }
 
 /* ============ 正文排版 ============ */
-.gov-prose { padding: 26px 30px 34px; font-size: 15.5px; line-height: 2.05; }
+.gov-prose { padding: 26px 30px 34px; font-size: 16px; line-height: 1.95; }
 .gov-prose h1 { display: none; }
 .gov-prose h2 {
   font-family: var(--serif); font-size: 21px; color: var(--gov-ink);
@@ -527,7 +537,12 @@ ul { list-style: none; }
   .honor-strip { grid-template-columns: repeat(2, 1fr); }
 }
 @media (max-width: 720px) {
+  /* 顶栏：手机端只保留语言切换按钮，单位名与日期不显示 */
+  .gov-topbar-inner { padding: 5px 14px; justify-content: flex-end; }
+  .topbar-site { display: none; }
+  .topbar-date { display: none; }
   .masthead-inner { padding: 10px 14px; gap: 8px; }
+  /* 手机端不显示校训 */
   .masthead-side { display: none; }
   .brand { gap: 10px; }
   .brand-name { font-size: 19px; letter-spacing: 1.5px; }

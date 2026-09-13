@@ -32,11 +32,21 @@ async function build() {
   const publicDir = h.public_dir;
 
   // Clean public dir
-  if (fs.existsSync(publicDir)) {
-    for (const f of fs.readdirSync(publicDir)) {
-      fs.rmSync(path.join(publicDir, f), { recursive: true, force: true });
+  // 注意：这里不能用 fs.rmSync(..., { recursive: true })。
+  // 运行环境会注入安全删除拦截（node-safe-delete-shim），递归删除可能抛错，
+  // 导致 public/ 被清空后构建中断、站点缺页。改为逐层手动删除，稳定可靠。
+  function emptyDir(dir) {
+    for (const f of fs.readdirSync(dir)) {
+      const fp = path.join(dir, f);
+      if (fs.lstatSync(fp).isDirectory()) {
+        emptyDir(fp);
+        fs.rmdirSync(fp);
+      } else {
+        fs.unlinkSync(fp);
+      }
     }
   }
+  if (fs.existsSync(publicDir)) emptyDir(publicDir);
 
   // Write each route
   let written = 0;

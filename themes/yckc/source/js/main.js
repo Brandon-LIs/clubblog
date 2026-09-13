@@ -5,14 +5,21 @@
 (function () {
   'use strict';
 
-  // ---- 顶栏日期 ----
+  // ---- 顶栏日期（中/英页面各用对应格式） ----
   var dateEl = document.getElementById('todayDate');
   if (dateEl) {
     var now = new Date();
-    var week = ['日', '一', '二', '三', '四', '五', '六'][now.getDay()];
-    dateEl.textContent =
-      now.getFullYear() + '年' + (now.getMonth() + 1) + '月' + now.getDate() + '日' +
-      '　星期' + week;
+    var isEnPage = /^\/en(\/|$)/.test(window.location.pathname);
+    if (isEnPage) {
+      dateEl.textContent = now.toLocaleDateString('en-US', {
+        year: 'numeric', month: 'long', day: 'numeric'
+      });
+    } else {
+      var week = ['日', '一', '二', '三', '四', '五', '六'][now.getDay()];
+      dateEl.textContent =
+        now.getFullYear() + '年' + (now.getMonth() + 1) + '月' + now.getDate() + '日' +
+        '　星期' + week;
+    }
   }
 
   // ---- 移动端菜单 ----
